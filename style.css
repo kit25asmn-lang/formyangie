@@ -1,0 +1,1393 @@
+/* ==========================================================================
+   ROMANTIC BABY-PINK TULIP PROPOSAL - STYLESHEET
+   A dreamy, playful, elegant aesthetic inspired by baby pink tulips at sunset.
+   ========================================================================== */
+
+/* --- CSS Variables & Theme Tokens --- */
+:root {
+  --primary-pink: #f472b6;
+  --baby-pink: #fbcfe8;
+  --soft-blush: #fce7f3;
+  --pastel-bg: #fff5f8;
+  --sunset-peach: #ffe4e6;
+  --warm-cream: #fffafc;
+  --pure-white: #ffffff;
+  
+  --deep-pink: #db2777;
+  --romantic-ruby: #be185d;
+  --dark-accent: #831843;
+  --text-main: #4a2838;
+  --text-muted: #8b5d72;
+  
+  --tulip-stem: #6bb37a;
+  --tulip-stem-dark: #509960;
+  --tulip-leaf: #9ed4a9;
+  --tulip-leaf-light: #c2ecd0;
+
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.88);
+  --glass-shadow: 0 20px 45px -10px rgba(244, 114, 182, 0.22),
+                  0 8px 20px -6px rgba(219, 39, 119, 0.08);
+  --card-radius: 28px;
+  --btn-radius: 9999px;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background: linear-gradient(135deg, #fdf2f8 0%, #fff1f5 35%, #fce7f3 70%, #ffe4e6 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* --- Ambient Canvas & Floating Particles --- */
+#ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Desktop Cursor Glow */
+.cursor-glow {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.18) 0%, rgba(251, 207, 232, 0.08) 50%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+@media (hover: none) {
+  .cursor-glow {
+    display: none !important;
+  }
+}
+
+/* --- Top Navigation & Music Control --- */
+.top-nav {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 90;
+}
+
+.music-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--btn-radius);
+  color: var(--dark-accent);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(244, 114, 182, 0.2);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.music-toggle:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(244, 114, 182, 0.35);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.music-toggle.playing {
+  border-color: var(--primary-pink);
+  background: rgba(253, 242, 248, 0.95);
+  color: var(--deep-pink);
+}
+
+.music-icon {
+  font-size: 1.1rem;
+  transition: transform 0.4s ease;
+}
+
+.music-toggle.playing .music-icon {
+  animation: gentle-wobble 2s infinite ease-in-out;
+}
+
+.sound-wave {
+  display: flex;
+  align-items: center;
+  gap: 2.5px;
+  height: 12px;
+}
+
+.sound-wave span {
+  width: 2.5px;
+  height: 4px;
+  background-color: var(--primary-pink);
+  border-radius: 2px;
+  transition: height 0.2s ease;
+}
+
+.music-toggle.playing .sound-wave span:nth-child(1) { animation: wave 1.2s infinite ease-in-out 0.1s; }
+.music-toggle.playing .sound-wave span:nth-child(2) { animation: wave 1.2s infinite ease-in-out 0.3s; }
+.music-toggle.playing .sound-wave span:nth-child(3) { animation: wave 1.2s infinite ease-in-out 0.2s; }
+.music-toggle.playing .sound-wave span:nth-child(4) { animation: wave 1.2s infinite ease-in-out 0.4s; }
+
+@keyframes wave {
+  0%, 100% { height: 4px; }
+  50% { height: 14px; }
+}
+
+/* Decorative Edge Tulips */
+.screen-tulip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  width: 95px;
+  height: 145px;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+.screen-tulip--left-top {
+  top: -15px;
+  left: -15px;
+  transform: rotate(135deg);
+}
+
+.screen-tulip--right-top {
+  top: -15px;
+  right: -15px;
+  transform: rotate(-135deg);
+}
+
+.screen-tulip--left-bottom {
+  bottom: -15px;
+  left: -15px;
+  transform: rotate(25deg);
+}
+
+.screen-tulip--right-bottom {
+  bottom: -15px;
+  right: -15px;
+  transform: rotate(-25deg);
+}
+
+/* --- Buttons Base Styles --- */
+.cute-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--btn-radius);
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%);
+  color: var(--pure-white);
+  box-shadow: 0 10px 25px -4px rgba(236, 72, 153, 0.4),
+              0 4px 10px -2px rgba(236, 72, 153, 0.25);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.cute-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 30px -4px rgba(236, 72, 153, 0.5),
+              0 6px 14px -2px rgba(236, 72, 153, 0.35);
+}
+
+.cute-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.secondary-btn {
+  background: var(--glass-bg);
+  color: var(--dark-accent);
+  border: 1.5px solid var(--baby-pink);
+  box-shadow: 0 8px 20px rgba(244, 114, 182, 0.15);
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--primary-pink);
+  color: var(--deep-pink);
+}
+
+.btn-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.cute-btn:hover .btn-arrow {
+  transform: translateY(3px);
+}
+
+/* --- Main Layout --- */
+.page-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Reveal on Scroll Elements */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   1. HERO SECTION
+   ========================================================================== */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 80px 20px 40px;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 720px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--deep-pink);
+  margin-bottom: 12px;
+  animation: float-soft 3.5s infinite ease-in-out;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--dark-accent);
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(244, 114, 182, 0.15);
+}
+
+.hero-instruction {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+
+/* --- REACTIVE HERO TULIP --- */
+.hero-tulip-stage {
+  position: relative;
+  width: 260px;
+  height: 340px;
+  margin: 10px auto 35px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.reactive-tulip {
+  position: relative;
+  width: 190px;
+  height: 300px;
+  cursor: pointer;
+  transform-origin: bottom center;
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.reactive-tulip:focus-visible {
+  outline: 2px dashed var(--primary-pink);
+  outline-offset: 8px;
+  border-radius: 20px;
+}
+
+.tulip-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Gentle ambient swaying */
+.reactive-tulip.natural-sway {
+  animation: tulip-breeze 5s infinite ease-in-out;
+}
+
+@keyframes tulip-breeze {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(2.8deg);
+  }
+  70% {
+    transform: rotate(-2.4deg);
+  }
+}
+
+/* Reactive Leaves */
+.tulip-leaf {
+  transform-origin: 100px 240px;
+  transition: transform 0.4s ease;
+}
+
+.leaf-left {
+  animation: leaf-sway-left 4.5s infinite ease-in-out;
+}
+
+.leaf-right {
+  animation: leaf-sway-right 4.8s infinite ease-in-out 0.4s;
+}
+
+@keyframes leaf-sway-left {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+@keyframes leaf-sway-right {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* Stamen glow and reveal */
+.tulip-stamen {
+  transform-origin: 100px 115px;
+  opacity: 0.25;
+  transform: scale(0.85);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reactive-tulip.bloomed .tulip-stamen {
+  opacity: 1;
+  transform: scale(1.1) translateY(-5px);
+  animation: stamen-pulse 2s infinite alternate ease-in-out;
+}
+
+@keyframes stamen-pulse {
+  0% { filter: drop-shadow(0 0 3px #fde047); }
+  100% { filter: drop-shadow(0 0 10px #fef08a); }
+}
+
+/* Petal Groups with 3D Depth */
+.petal-group-left,
+.petal-group-right,
+.petal-group-center {
+  transform-origin: 100px 120px;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reactive-tulip:hover .petal-group-left {
+  transform: rotate(-10deg) translate(-2px, -3px);
+}
+
+.reactive-tulip:hover .petal-group-right {
+  transform: rotate(10deg) translate(2px, -3px);
+}
+
+.reactive-tulip:hover .petal-group-center {
+  transform: scale(1.04) translateY(-2px);
+}
+
+/* Bloomed state on click / tap */
+.reactive-tulip.bloomed .petal-group-left {
+  transform: rotate(-22deg) translate(-7px, -6px);
+}
+
+.reactive-tulip.bloomed .petal-group-right {
+  transform: rotate(22deg) translate(7px, -6px);
+}
+
+.reactive-tulip.bloomed .petal-group-center {
+  transform: scale(1.1) translateY(-6px);
+}
+
+.reactive-tulip.bloomed .petal-back {
+  transform: scaleY(1.12) translateY(-6px);
+}
+
+.reactive-tulip.bloomed {
+  animation: tulip-bloom-bounce 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes tulip-bloom-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.15) translateY(-10px); }
+  65% { transform: scale(0.96) translateY(2px); }
+  100% { transform: scale(1.05); }
+}
+
+/* ==========================================================================
+   BUTTERFLIES (3D Fluttering Garden Companions)
+   ========================================================================== */
+.butterfly-habitat {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 20;
+}
+
+.butterfly {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  width: 48px;
+  height: 40px;
+  transform-origin: center center;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+              left 2.5s cubic-bezier(0.25, 1, 0.5, 1),
+              top 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, left, top;
+}
+
+.butterfly-wings-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  perspective: 600px;
+  transform-style: preserve-3d;
+}
+
+.bf-wing {
+  width: 24px;
+  height: 32px;
+  display: inline-block;
+  will-change: transform;
+}
+
+.bf-wing-left {
+  transform-origin: right center;
+  animation: butterfly-flap-left 0.2s infinite alternate ease-in-out;
+}
+
+.bf-wing-right {
+  transform-origin: left center;
+  animation: butterfly-flap-right 0.2s infinite alternate ease-in-out;
+}
+
+@keyframes butterfly-flap-left {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(70deg); }
+}
+
+@keyframes butterfly-flap-right {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-70deg); }
+}
+
+.bf-body {
+  width: 6px;
+  height: 24px;
+  z-index: 2;
+  margin: 0 -2px;
+}
+
+.butterfly:hover {
+  filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.8));
+}
+
+.butterfly.startled {
+  animation: butterfly-startle 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes butterfly-startle {
+  0% { transform: scale(1) rotate(0deg); }
+  40% { transform: scale(1.35) translateY(-35px) rotate(-18deg); }
+  70% { transform: scale(1.15) translateY(-60px) rotate(15deg); }
+  100% { transform: scale(1) translateY(-70px) rotate(0deg); }
+}
+
+/* Interactive Tap Hint Badge */
+.tap-hint {
+  position: absolute;
+  top: 15px;
+  right: -25px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 5px 12px;
+  border-radius: var(--btn-radius);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--deep-pink);
+  box-shadow: 0 4px 12px rgba(244, 114, 182, 0.2);
+  pointer-events: none;
+  animation: bounce-badge 2s infinite ease-in-out;
+  transition: opacity 0.4s ease;
+}
+
+.reactive-tulip.bloomed .tap-hint {
+  opacity: 0;
+}
+
+@keyframes bounce-badge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.hero-cta-btn {
+  font-size: 1.05rem;
+  padding: 16px 36px;
+  margin-top: 5px;
+}
+
+/* ==========================================================================
+   2. LOVE LETTER SECTION
+   ========================================================================== */
+.letter-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 80px 20px;
+}
+
+.letter-wrapper {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Love Letter Card */
+.love-letter-card {
+  position: relative;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--card-radius);
+  padding: 55px 50px 45px;
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.love-letter-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 55px -12px rgba(244, 114, 182, 0.28),
+              0 10px 22px -6px rgba(219, 39, 119, 0.12);
+}
+
+/* Wax / Tulip Stamp Motif */
+.letter-stamp {
+  position: absolute;
+  top: -24px;
+  right: 45px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #f472b6, #db2777);
+  color: var(--pure-white);
+  padding: 6px 14px;
+  border-radius: var(--btn-radius);
+  box-shadow: 0 6px 16px rgba(219, 39, 119, 0.35);
+  border: 2px solid #ffffff;
+}
+
+.stamp-icon {
+  font-size: 1rem;
+}
+
+.stamp-text {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.letter-header {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.letter-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--deep-pink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.letter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  font-weight: 700;
+  color: var(--dark-accent);
+  margin-bottom: 8px;
+}
+
+.letter-greeting {
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--romantic-ruby);
+}
+
+.letter-body {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  color: var(--text-main);
+  line-height: 1.85;
+  margin-bottom: 30px;
+}
+
+.letter-body p {
+  margin-bottom: 16px;
+}
+
+.letter-body p:last-child {
+  margin-bottom: 0;
+}
+
+.letter-footer {
+  text-align: right;
+  border-top: 1px dashed rgba(244, 114, 182, 0.4);
+  padding-top: 20px;
+}
+
+.letter-signoff {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.letter-signature {
+  font-family: var(--font-script);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--deep-pink);
+}
+
+/* Miniature animated tulip beside the card */
+.letter-tulip-decor {
+  position: absolute;
+  bottom: -20px;
+  left: -28px;
+  width: 75px;
+  height: 120px;
+  pointer-events: none;
+  animation: gentle-wobble 4s infinite ease-in-out;
+}
+
+.mini-tulip-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.letter-cta-btn {
+  margin-top: 35px;
+}
+
+/* Floating ambient hearts around letter */
+.section-decorations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0.55;
+  animation: float-heart 6s infinite ease-in-out;
+}
+
+.h1 { top: 12%; left: 8%; animation-delay: 0s; }
+.h2 { top: 22%; right: 10%; animation-delay: 1.5s; font-size: 1.8rem; }
+.h3 { bottom: 18%; left: 6%; animation-delay: 3s; font-size: 1.3rem; }
+.h4 { bottom: 12%; right: 8%; animation-delay: 4.5s; font-size: 1.6rem; }
+
+@keyframes float-heart {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(8deg); }
+}
+
+/* ==========================================================================
+   3. TULIP GARDEN SECTION
+   ========================================================================== */
+.garden-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 90px 20px 60px;
+  text-align: center;
+}
+
+.garden-header {
+  max-width: 650px;
+  margin-bottom: 35px;
+}
+
+.garden-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--deep-pink);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: rgba(251, 207, 232, 0.6);
+  padding: 5px 14px;
+  border-radius: var(--btn-radius);
+  margin-bottom: 12px;
+}
+
+.garden-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  color: var(--dark-accent);
+  margin-bottom: 12px;
+}
+
+.garden-subtitle {
+  font-family: var(--font-script);
+  font-size: 1.5rem;
+  color: var(--romantic-ruby);
+  margin-bottom: 8px;
+}
+
+.garden-prompt {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Garden Bed Container */
+.garden-bed {
+  width: 100%;
+  max-width: 900px;
+  min-height: 310px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px 15px 40px;
+  margin: 15px 0 25px;
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.65) 100%);
+  border-bottom: 4px solid #a7d8b2;
+  border-radius: 32px 32px 18px 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 16px 35px rgba(244, 114, 182, 0.12);
+  overflow: visible;
+}
+
+/* Garden Individual Tulip Item */
+.garden-tulip-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  transform-origin: bottom center;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+}
+
+.garden-tulip-item svg {
+  overflow: visible;
+  transition: transform 0.3s ease;
+}
+
+.garden-tulip-item:hover {
+  transform: scale(1.1) translateY(-6px);
+}
+
+.garden-tulip-item.bloomed {
+  animation: tulip-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes tulip-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.22) translateY(-14px); }
+  100% { transform: scale(1.1) translateY(-4px); }
+}
+
+.garden-tulip-item .garden-stamen {
+  transform-origin: 55px 72px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.garden-tulip-item.bloomed .garden-stamen {
+  opacity: 1;
+  transform: scale(1.18) translateY(-3px);
+  filter: drop-shadow(0 0 6px #fde047);
+}
+
+.garden-counter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--glass-bg);
+  border: 1.5px solid var(--baby-pink);
+  border-radius: var(--btn-radius);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--deep-pink);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.18);
+  margin-bottom: 30px;
+}
+
+.garden-cta-btn {
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   4. THE PROPOSAL SECTION & RUNAWAY NO BUTTON
+   ========================================================================== */
+.proposal-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.proposal-container {
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+}
+
+.proposal-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--card-radius);
+  padding: 55px 40px 50px;
+  box-shadow: 0 25px 60px -10px rgba(244, 114, 182, 0.35),
+              0 12px 25px -5px rgba(219, 39, 119, 0.15);
+  overflow: visible;
+}
+
+.proposal-envelope-top {
+  width: 68px;
+  height: 68px;
+  margin: -85px auto 20px;
+  background: linear-gradient(135deg, #fbcfe8, #f472b6);
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 10px 25px rgba(244, 114, 182, 0.4);
+}
+
+.pulse-heart {
+  display: inline-block;
+  animation: heartbeat 1.6s infinite ease-in-out;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.18); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.14); }
+}
+
+.proposal-subhead {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--deep-pink);
+  margin-bottom: 8px;
+}
+
+.proposal-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.proposal-question-box {
+  margin: 15px 0 20px;
+  padding: 10px;
+}
+
+.proposal-question {
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 6vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--dark-accent);
+  text-shadow: 0 2px 14px rgba(244, 114, 182, 0.25);
+}
+
+.proposal-hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+}
+
+/* Action Arena for the buttons */
+.proposal-action-arena {
+  position: relative;
+  min-height: 220px;
+  width: 100%;
+  max-width: 520px;
+  margin: 10px auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px;
+  /* Safe boundaries for runaway no button */
+}
+
+/* Button Base in Proposal */
+.proposal-btn {
+  font-family: var(--font-sans);
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  border: none;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* YES BUTTON */
+.btn-yes {
+  position: relative;
+  background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%);
+  color: var(--pure-white);
+  padding: 18px 45px;
+  font-size: 1.25rem;
+  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.45),
+              0 0 0 0 rgba(244, 114, 182, 0.5);
+  animation: yes-glow-pulse 2.2s infinite ease-in-out;
+  z-index: 10;
+  will-change: transform;
+}
+
+@keyframes yes-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.45),
+                0 0 0 0 rgba(244, 114, 182, 0.5);
+  }
+  50% {
+    box-shadow: 0 14px 38px rgba(236, 72, 153, 0.65),
+                0 0 24px 6px rgba(244, 114, 182, 0.4);
+  }
+}
+
+.btn-yes:hover {
+  transform: scale(1.06);
+}
+
+.btn-yes:active {
+  transform: scale(0.98);
+}
+
+/* Growing animation class triggered dynamically */
+.btn-yes.just-grown {
+  animation: yes-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes yes-pop {
+  0% { transform: scale(var(--current-scale, 1)); }
+  50% { transform: scale(calc(var(--current-scale, 1) * 1.15)); }
+  100% { transform: scale(var(--current-scale, 1)); }
+}
+
+/* RUNAWAY NO BUTTON */
+.btn-no {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-muted);
+  border: 1.5px solid rgba(244, 114, 182, 0.5);
+  padding: 14px 34px;
+  font-size: 1.05rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  z-index: 20;
+  white-space: nowrap;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease;
+  will-change: transform, left, top;
+}
+
+.btn-no.is-evading {
+  position: absolute;
+  background: #fff0f5;
+  color: var(--deep-pink);
+  border-color: var(--primary-pink);
+  box-shadow: 0 8px 22px rgba(244, 114, 182, 0.3);
+}
+
+/* Chatter message from the playful runner */
+.runaway-chatter {
+  min-height: 28px;
+  margin-top: 15px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--deep-pink);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.runaway-chatter.active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   5. CELEBRATION / MAGICAL FINALE OVERLAY
+   ========================================================================== */
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 20px 100px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: scale(0.97);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.9s;
+  overflow: hidden;
+}
+
+.celebration-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* Sunset twilight atmosphere backdrop */
+.sunset-glow-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 228, 230, 0.96) 0%, rgba(252, 231, 243, 0.97) 50%, rgba(251, 207, 232, 0.98) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 1;
+}
+
+.celebration-content {
+  position: relative;
+  z-index: 10;
+  max-width: 660px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: float-soft 4s infinite ease-in-out;
+}
+
+.celebration-badge {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--deep-pink);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--baby-pink);
+  padding: 6px 18px;
+  border-radius: var(--btn-radius);
+  margin-bottom: 14px;
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.2);
+}
+
+.celebration-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 7vw, 4.6rem);
+  font-weight: 700;
+  color: var(--dark-accent);
+  line-height: 1.15;
+  margin-bottom: 10px;
+  text-shadow: 0 4px 20px rgba(244, 114, 182, 0.3);
+}
+
+.celebration-subtitle {
+  font-family: var(--font-script);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--romantic-ruby);
+  margin-bottom: 25px;
+}
+
+.celebration-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--card-radius);
+  padding: 35px 35px 30px;
+  box-shadow: 0 20px 45px rgba(244, 114, 182, 0.25);
+  margin-bottom: 30px;
+}
+
+.celebration-message {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  margin-bottom: 18px;
+}
+
+.celebration-signature {
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  color: var(--deep-pink);
+  text-align: right;
+}
+
+.celebration-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.primary-sparkle-btn {
+  background: linear-gradient(135deg, #f472b6, #db2777);
+}
+
+/* Final panoramic field of blooming pink tulips across bottom */
+.finale-garden-field {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  pointer-events: none;
+  z-index: 5;
+  padding: 0 10px;
+  overflow: hidden;
+}
+
+.finale-tulip {
+  transform-origin: bottom center;
+  animation: finale-tulip-grow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) backwards,
+             tulip-breeze 4s infinite ease-in-out;
+}
+
+@keyframes finale-tulip-grow {
+  0% { transform: scale(0) translateY(50px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ==========================================================================
+   ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes gentle-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 0 16px;
+  }
+
+  .hero-tulip-stage {
+    width: 220px;
+    height: 290px;
+    margin-bottom: 25px;
+  }
+
+  .reactive-tulip {
+    width: 160px;
+    height: 260px;
+  }
+
+  .love-letter-card {
+    padding: 40px 24px 30px;
+  }
+
+  .letter-stamp {
+    top: -18px;
+    right: 25px;
+    padding: 4px 10px;
+  }
+
+  .letter-tulip-decor {
+    display: none;
+  }
+
+  .garden-bed {
+    min-height: 260px;
+    gap: 8px;
+    padding: 10px 5px 25px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .garden-bed::-webkit-scrollbar {
+    display: none;
+  }
+
+  .proposal-card {
+    padding: 45px 20px 35px;
+  }
+
+  .proposal-action-arena {
+    min-height: 200px;
+    gap: 15px;
+  }
+
+  .btn-yes {
+    padding: 16px 36px;
+    font-size: 1.15rem;
+  }
+
+  .btn-no {
+    padding: 12px 26px;
+    font-size: 0.95rem;
+  }
+
+  .top-nav {
+    top: 14px;
+    right: 14px;
+  }
+  
+  .music-toggle {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .letter-title {
+    font-size: 1.9rem;
+  }
+
+  .garden-title {
+    font-size: 2rem;
+  }
+
+  .proposal-question {
+    font-size: 2.2rem;
+  }
+
+  .celebration-title {
+    font-size: 2.6rem;
+  }
+
+  .celebration-card {
+    padding: 24px 18px 20px;
+  }
+
+  .celebration-message {
+    font-size: 1.02rem;
+  }
+
+  .celebration-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .celebration-actions .cute-btn {
+    width: 100%;
+  }
+}
